@@ -15,32 +15,37 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
             return EqualsStateEngine(scoreOne).printScore()
         } else if (scoreOne >= 4 || scoreTwo >= 4) {
             return AdvantageWinStateEngine(scoreOne, scoreTwo).printScore()
-
         } else {
-            var score = ""
-            var tempScore = 0
+            return  PointsStateEngine(scoreOne, scoreTwo).printScore()
 
-            for (i in 1..2) {
-                if (i == 1)
-                    tempScore = scoreOne
-                else {
-                    score += "-"
-                    tempScore = scoreTwo
-                }
-                when (tempScore) {
-                    0 -> score += "Love"
-                    1 -> score += "Fifteen"
-                    2 -> score += "Thirty"
-                    3 -> score += "Forty"
-                }
-            }
-            return score
         }
     }
-
-
 }
-class AdvantageWinStateEngine(private val scoreOne: Int,private val  scoreTwo: Int): GameStateEngine {
+
+class PointsStateEngine(private val scoreOne: Int, private val scoreTwo: Int) : GameStateEngine {
+    override fun printScore(): String {
+        var score = ""
+        var tempScore = 0
+
+        for (i in 1..2) {
+            if (i == 1)
+                tempScore = scoreOne
+            else {
+                score += "-"
+                tempScore = scoreTwo
+            }
+            when (tempScore) {
+                0 -> score += "Love"
+                1 -> score += "Fifteen"
+                2 -> score += "Thirty"
+                3 -> score += "Forty"
+            }
+        }
+        return score
+    }
+}
+
+class AdvantageWinStateEngine(private val scoreOne: Int, private val scoreTwo: Int) : GameStateEngine {
     override fun printScore(): String {
         val minusResult = scoreOne - scoreTwo
         return when {
@@ -52,7 +57,7 @@ class AdvantageWinStateEngine(private val scoreOne: Int,private val  scoreTwo: I
     }
 }
 
-class EqualsStateEngine(private val scoreOne: Int): GameStateEngine {
+class EqualsStateEngine(private val scoreOne: Int) : GameStateEngine {
     override fun printScore(): String {
         return when (scoreOne) {
             0 -> "Love-All"
@@ -68,10 +73,9 @@ interface GameStateEngine {
 }
 
 
-
-object GameState {
-    fun createEngine(scoreOne: Int, scoreTwo: Int) : String {
-        if (scoreOne == scoreTwo) {
-        }
-    }
-}
+//object GameState {
+//    fun createEngine(scoreOne: Int, scoreTwo: Int): String {
+//        if (scoreOne == scoreTwo) {
+//        }
+//    }
+//}
