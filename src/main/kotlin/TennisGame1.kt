@@ -18,21 +18,21 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
 class PointsStateEngine(private val scoreOne: Int, private val scoreTwo: Int) : GameStateEngine {
     override fun printScore(): String {
         var score = ""
-        var tempScore = scoreOne
-
-        for (i in 1..2) {
-            if (i == 2)
-                score += "-"
-                tempScore = scoreTwo
-            }
-            when (tempScore) {
-                0 -> score += "Love"
-                1 -> score += "Fifteen"
-                2 -> score += "Thirty"
-                3 -> score += "Forty"
-            }
-        }
+        score = calculateTempScore(scoreOne, score)
+        score+= "-"
+        score = calculateTempScore(scoreTwo, score)
         return score
+    }
+
+    fun calculateTempScore(tempScore: Int, score: String): String {
+        var score1 = score
+        when (tempScore) {
+            0 -> score1 += "Love"
+            1 -> score1 += "Fifteen"
+            2 -> score1 += "Thirty"
+            3 -> score1 += "Forty"
+        }
+        return score1
     }
 }
 
