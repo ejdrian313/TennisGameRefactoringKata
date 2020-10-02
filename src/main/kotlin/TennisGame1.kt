@@ -11,14 +11,8 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
     }
 
     override fun getScore(): String {
-        if (scoreOne == scoreTwo) {
-            return EqualsStateEngine(scoreOne).printScore()
-        } else if (scoreOne >= 4 || scoreTwo >= 4) {
-            return AdvantageWinStateEngine(scoreOne, scoreTwo).printScore()
-        } else {
-            return  PointsStateEngine(scoreOne, scoreTwo).printScore()
-
-        }
+        val gameEngine = GameState.createEngine(scoreOne, scoreTwo)
+        gameEngine.printScore()
     }
 }
 
@@ -73,9 +67,14 @@ interface GameStateEngine {
 }
 
 
-//object GameState {
-//    fun createEngine(scoreOne: Int, scoreTwo: Int): String {
-//        if (scoreOne == scoreTwo) {
-//        }
-//    }
-//}
+object GameState {
+    fun createEngine(scoreOne: Int, scoreTwo: Int): GameStateEngine {
+        return if (scoreOne == scoreTwo) {
+            EqualsStateEngine(scoreOne)
+        } else if (scoreOne >= 4 || scoreTwo >= 4) {
+            AdvantageWinStateEngine(scoreOne, scoreTwo)
+        } else {
+            PointsStateEngine(scoreOne, scoreTwo)
+        }
+    }
+}
