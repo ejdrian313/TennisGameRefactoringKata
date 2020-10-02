@@ -11,20 +11,17 @@ class TennisGame1(private val player1Name: String, private val player2Name: Stri
     }
 
     override fun getScore(): String {
-        val gameEngine = GameState.createEngine(scoreOne, scoreTwo)
-        gameEngine.printScore()
+       return GameState.createEngine(scoreOne, scoreTwo).printScore()
     }
 }
 
 class PointsStateEngine(private val scoreOne: Int, private val scoreTwo: Int) : GameStateEngine {
     override fun printScore(): String {
         var score = ""
-        var tempScore = 0
+        var tempScore = scoreOne
 
         for (i in 1..2) {
-            if (i == 1)
-                tempScore = scoreOne
-            else {
+            if (i == 2)
                 score += "-"
                 tempScore = scoreTwo
             }
